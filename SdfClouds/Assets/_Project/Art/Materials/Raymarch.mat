@@ -131,7 +131,7 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     - _alphaDiscard: 0
-    - _fbmAmplitude: 0.2
+    - _fbmAmplitude: 0.3
     - _fbmE: 3
     - _fbmOctaves: 4
     - _marchSize: 0.02

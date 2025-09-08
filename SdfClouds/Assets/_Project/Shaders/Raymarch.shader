@@ -36,6 +36,7 @@ Shader "Lit/Raymarch"
 
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Input.hlsl"
 
             #define MAX_STEPS 100
             #define MAX_DIST 100
@@ -62,7 +63,6 @@ Shader "Lit/Raymarch"
             // SAMPLER(sampler_NoiseTex);
             // float4 _NoiseTex_ST;
             
-
             float _fbmAmplitude;
             float _fbmOctaves;
             float _fbmE;
@@ -102,7 +102,6 @@ Shader "Lit/Raymarch"
               float3 q = abs(p) - b;
               return length(max(q, 0.0)) + min(max(q.x, max(q.y, q.z)), 0.0);
             }
-            
             //noise by: https://www.shadertoy.com/view/WdXGRj
             float hash(float n)
             {
@@ -155,7 +154,7 @@ Shader "Lit/Raymarch"
                 
                 float f = fbm(p, _fbmOctaves);
 
-                return d + f;
+                return (d + f);
             }
 
             float raymarch(float3 ro, float3 rd)
@@ -177,9 +176,9 @@ Shader "Lit/Raymarch"
             {
                 float3 depth = 0;
                 float3 p = ro + depth * rd;
-                Light mainLight = GetMainLight();
-                float3 lightDir = mainLight.direction; //dir to light
-                float3 lightColor = mainLight.color;
+                // Light mainLight = GetMainLight();
+                // float3 lightDir = mainLight.direction; //dir to light
+                // float3 lightColor = mainLight.color;
 
                 float4 res = 0;
                 //todo: optimize to step normaly until we find a volumetric obj
@@ -206,9 +205,13 @@ Shader "Lit/Raymarch"
                         //calc directional derivative for fast diffuse lighting
                         //aka check density a small step towards light source in order to see if gets denser or not
                         //aka lighter or not
-                        float diffuse = clamp(scene(p)-scene(p+0.3*-lightDir)/0.3,0.0,1.0);
-                        float3 lin = _cloudColor * 1.1+_shadowWeight * lightColor * diffuse; //weigh the cloud color at 110%
-                        
+                        //float diffuse = clamp(scene(p)-scene(p+0.3*-lightDir)/0.3,0.0,1.0);
+                        float diffuse = clamp(-scene(p)+scene(p+0.3*_MainLightPosition)/0.3,0.0,1.0);
+                        //float3 lin = _cloudColor * 1.1+_shadowWeight * lightColor * diffuse; //weigh the cloud color at 110%
+                        float3 lin = _cloudColor * 1.1+_shadowWeight * _MainLightColor * diffuse; //weigh the cloud color at 110%
+
+                        //todo: try to rewrite with this
+                        //https://shaderbits.com/blog/creating-volumetric-ray-marcher#:~:text=Example%20Shadowed%20Volume%20Code
                         
                         float4 color = float4(lerp((float3)1, (float3)0, density), density);
                         color.rgb *= color.a;
@@ -235,8 +238,11 @@ Shader "Lit/Raymarch"
                 return normalize(n);
             }
 
-            half4 frag(v2f i) : SV_Target
+            float4 frag(v2f i) : SV_Target
             {
+                //return float4(_MainLightPosition.xyz,1);
+                //return (_MainLightPosition.xyz, 1);
+                //return  float4(-GetMainLight().direction, 1);
                 float2 uv = i.uv - 0.5;
                 float3 ro = i.ro; //cam origin
                 float3 rd = normalize(i.hitPos - ro);
