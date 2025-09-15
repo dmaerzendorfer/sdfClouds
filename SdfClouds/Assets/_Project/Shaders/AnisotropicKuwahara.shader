@@ -7,7 +7,7 @@ Shader "Hidden/AnisotropicKuwahara" {
         _Hardness("hardness", Range(1,100)) = 8
         _ZeroCrossing("zero crossing",Range(0.01,3))=0.58
         _Alpha("alpha",Range(0.01,2))=1
-        _Zeta("zet", Range(0.1,3))=1
+        _Zeta("zeta", Range(0.1,3))=1
     }
 
     //based on shader by acerola

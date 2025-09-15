@@ -1,5 +1,22 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-3132891674535532882
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c762a8aeca4e4eeda91b8739cfc18a24, type: 3}
+  m_Name: BlurRendererFeature
+  m_EditorClassIdentifier: 
+  m_Active: 1
+  settings:
+    horizontalBlur: 0
+    verticalBlur: 0
+  blurShader: {fileID: 4800000, guid: 61c562ef27a5607488acadbcf921b4b7, type: 3}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26,8 +43,9 @@ MonoBehaviour:
     probeVolumeBlendStatesCS: {fileID: 7200000, guid: b9a23f869c4fd45f19c5ada54dd82176, type: 3}
   m_RendererFeatures:
   - {fileID: 7833122117494664109}
-  - {fileID: 3246434183914482752}
-  m_RendererFeatureMap: ad6b866f10d7b46c406ce89eb0a60d2d
+  - {fileID: -3132891674535532882}
+  - {fileID: 9080699265353993582}
+  m_RendererFeatureMap: ad6b866f10d7b46caee687eb9ebb85d46e4d93c7de1f057e
   m_UseNativeRenderPass: 1
   xrSystemData: {fileID: 0}
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
@@ -53,23 +71,6 @@ MonoBehaviour:
   m_DepthTextureFormat: 0
   m_AccurateGbufferNormals: 0
   m_IntermediateTextureMode: 0
---- !u!114 &3246434183914482752
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c762a8aeca4e4eeda91b8739cfc18a24, type: 3}
-  m_Name: BlurRendererFeature
-  m_EditorClassIdentifier: 
-  m_Active: 1
-  settings:
-    horizontalBlur: 0
-    verticalBlur: 0
-  shader: {fileID: 4800000, guid: 61c562ef27a5607488acadbcf921b4b7, type: 3}
 --- !u!114 &7833122117494664109
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -105,3 +106,28 @@ MonoBehaviour:
   - {fileID: 2800000, guid: 3302065f671a8450b82c9ddf07426f3a, type: 3}
   - {fileID: 2800000, guid: 56a77a3e8d64f47b6afe9e3c95cb57d5, type: 3}
   m_Shader: {fileID: 4800000, guid: 0849e84e3d62649e8882e9d6f056a017, type: 3}
+--- !u!114 &9080699265353993582
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de43a5b7b04a4a9a8b41f2e3798ae89d, type: 3}
+  m_Name: KuwaharaRendererFeature
+  m_EditorClassIdentifier: 
+  m_Active: 0
+  settings:
+    renderPassEvent: 400
+    kernelSize: 2
+    n: 8
+    sharpness: 8
+    hardness: 1
+    alpha: 1
+    zeroCrossing: 0.58
+    useZeta: 0
+    zeta: 1
+    passes: 1
+  shader: {fileID: 4800000, guid: 5f6ac15a136635b46bcb9585a36bb655, type: 3}

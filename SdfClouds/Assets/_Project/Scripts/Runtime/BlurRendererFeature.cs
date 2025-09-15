@@ -1,5 +1,4 @@
-﻿using Unity.VisualScripting;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
 namespace _Project.Scripts.Runtime
@@ -7,19 +6,20 @@ namespace _Project.Scripts.Runtime
     public class BlurRendererFeature : ScriptableRendererFeature
     {
         [SerializeField] private BlurSettings settings;
-        [SerializeField] private Shader shader;
-        private Material material;
+        [SerializeField] private Shader blurShader;
+        private Material blurMaterial;
         private BlurRenderPass blurRenderPass;
-
+        
         public override void Create()
         {
-            if (shader == null)
+            if (blurShader == null)
             {
                 return;
             }
 
-            material = new Material(shader);
-            blurRenderPass = new BlurRenderPass(material, settings);
+            
+            blurMaterial = new Material(blurShader);
+            blurRenderPass = new BlurRenderPass(blurMaterial, settings);
 
             blurRenderPass.renderPassEvent = RenderPassEvent.AfterRenderingSkybox;
         }
@@ -36,9 +36,9 @@ namespace _Project.Scripts.Runtime
         protected override void Dispose(bool disposing)
         {
             if (Application.isPlaying)
-                Destroy(material);
+                Destroy(blurMaterial);
             else
-                DestroyImmediate(material);
+                DestroyImmediate(blurMaterial);
         }
     }
 }

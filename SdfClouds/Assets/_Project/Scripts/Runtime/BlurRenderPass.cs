@@ -15,11 +15,13 @@ namespace _Project.Scripts.Runtime
 
         private TextureDesc blurTextureDescriptor;
 
-        private static readonly int horizontalBlurId = Shader.PropertyToID("_HorizontalBlur");
-        private static readonly int verticalBlurId = Shader.PropertyToID("_VerticalBlur");
         private const string k_BlurTextureName = "_BlurTexture";
         private const string k_VerticalPassName = "VerticalBlurRenderPass";
         private const string k_HorizontalPassName = "HorizontalBlurRenderPass";
+
+        private static readonly int horizontalBlurId = Shader.PropertyToID("_HorizontalBlur");
+        private static readonly int verticalBlurId = Shader.PropertyToID("_VerticalBlur");
+
 
         public BlurRenderPass(Material material, BlurSettings defaultSettings)
         {
